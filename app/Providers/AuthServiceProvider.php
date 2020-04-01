@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -26,5 +27,10 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+        $this->app['auth']->viaRequest('api', function ($request) {
+            if ($request->input('api_token')) {
+                return User::where('api_token', $request->input('api_token'))->first();
+            }
+        });
     }
 }

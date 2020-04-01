@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome');//home page
+});
+
+Route::prefix('api')->group(function () {
+	Route::post('login','AuthController@authenticate');
+    Route::get('produk', 'ProductController@index');
+    Route::post('produk', 'ProductController@store');
+    Route::get('produk/{id}', 'ProductController@getById');
+    Route::put('produk/{id}', 'ProductController@update');
+    Route::delete('produk/{id}', 'ProductController@destroy');
 });
